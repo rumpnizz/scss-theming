@@ -1,0 +1,11 @@
+@import './mixins.scss';
+
+*, 
+*:before, 
+*:after {
+    @include box-sizing(border-box);
+}
+
+body {
+    margin: 0;
+}

@@ -1,0 +1,60 @@
+doctype html
+html
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title App
+        link(href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,900&display=swap', rel='stylesheet')
+        //- link(href='/assets/fontawesome/css/all.min.css', rel='stylesheet')
+        link(href='/assets/css/layout.css', rel='stylesheet')
+        block scripts
+            script(src='/assets/js/app.js')
+            script(src='/assets/js/settings.js')
+            script(src='/assets/js/utilities.js')
+            script.
+
+                app.auth()
+
+                (function (global) {
+
+                    var globalId = 0;
+
+                    function Switch(selector) {
+                        let element = document.querySelector(selector);
+                    }
+
+                    global.Switch = Switch;
+
+                })(window);
+
+
+                //- console.log(Switch);
+
+                var themes = ['theme-light', 'theme-dark'];
+
+                window.addEventListener('DOMContentLoaded', function () {
+                    document.querySelector('#checkbox').addEventListener('change', function (e) {
+                        var root = document.querySelector('#app-root');
+                        root.classList.remove(themes[+!this.checked]);
+                        root.classList.add(themes[+this.checked]);
+                    });
+
+                    //- var switch = new Switch('#the-switch');
+                    
+                    //- switch.on();
+
+                }, false);
+    body
+        #app-root.theme-light
+            .app-container
+                .page-header
+                    .container
+                        label(for='checkbox').switch
+                            input(type='checkbox')#checkbox
+                            .slider.round
+                        .app-switch#the-switch
+                .page-content
+                    .container
+                        block layout-content
+
+                

@@ -1,0 +1,249 @@
+/*
+ * Theme definitions
+ */
+
+ $themes: (
+    light: (
+        backgroundColor: white,
+        textColor: #408bbd,
+        buttonTextColor: #408bbd,
+        buttonTextTransform: none,
+        buttonTextHoverColor: #61b0e7,
+        buttonColor: #fff,
+        buttonBorder: 2px solid #408bbd,
+        
+        sliderActiveColor: #408bbd,
+        boxShadow: 0 0 3px rgba(0, 0, 0, .2)
+    ),
+    dark: (
+        backgroundColor: #222,
+        textColor: #ddd,
+        buttonTextColor: #aaa,
+        buttonTextTransform: uppercase,
+        buttonTextHoverColor: #ddd,
+        buttonColor: #333,
+        buttonBorder: 1px solid #333,
+        
+        sliderActiveColor: #408bbd,
+        boxShadow: 0 0 3px rgba(0, 0, 0, .5)
+    ),
+);
+  
+/*
+* Implementation of themes
+*/
+@mixin themify($themes) {
+    @each $theme, $map in $themes {
+        .theme-#{$theme} & {
+        $theme-map: () !global;
+        @each $key, $submap in $map {
+            $value: map-get(map-get($themes, $theme), '#{$key}');
+            $theme-map: map-merge($theme-map, ($key: $value)) !global;
+        }
+        @content;
+        $theme-map: null !global;
+        }
+    }
+}
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}
+
+
+@mixin box-sizing($box-model) {
+    -webkit-box-sizing: $box-model;
+    -moz-box-sizing: $box-model;
+    box-sizing: $box-model;
+}
+
+*,
+*:before,
+*:after {
+    @include box-sizing(border-box);
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    // background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+    // color: #444;
+}
+
+#app-root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    > div {
+        display: flex;
+        flex: 1;
+    }
+}
+
+.app-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        transition: .4s;
+  
+    .page-title {
+        position: relative;
+        font-style: italic;
+        font-weight: 900;
+        font-size: 8rem;
+
+        .slogan {
+            position: absolute;
+            font-size: .13em;
+            // top: 1.8rem;
+            bottom: .0em;
+            
+            // left: 6.2rem;
+            letter-spacing: .7em;
+            left: 1em;
+        }
+    }
+
+    .title {
+        position: relative;
+        font-weight: lighter;
+        // width: 190px;
+        height: 68px;
+        overflow: hidden;
+        
+        .theme-title-0,
+        .theme-title-1 {
+            display: block;
+            position: relative;
+            transition: top .4s ease-in-out;
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            text-align: center;
+            top: 0px;
+        }
+
+        &.change {
+            .theme-title-0,
+            .theme-title-1 {
+                top: -68px;
+            }
+        }
+
+        &:before,
+        &:after {
+            display: block;
+            top: -5px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            content: '';
+
+            @include themify($themes) {
+                box-shadow: themed('boxShadow');  
+            }
+        }
+
+        &:after {
+            top: auto;
+            bottom: -5px;
+        }
+
+    }
+
+    #theme-name {
+        display: inline-block;
+        width: 71px;
+        text-align: center;
+    }
+  
+    @include themify($themes) {
+        color: themed('textColor');  
+        background-color: themed('backgroundColor');
+    }
+  
+    .button {
+        max-width: 20em;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 15px 32px;
+        display: inline-block;
+        transition: color 0.1s, border-color 0.1s, background-color 0.1s;
+  
+        @include themify($themes) {
+            border: themed('buttonBorder');
+            color: themed('buttonTextColor'); 
+            border-color: themed('buttonTextColor');
+            background-color: themed('buttonColor');
+            text-transform: themed('buttonTextTransform');
+
+            &:hover {
+                color: themed('buttonTextHoverColor'); 
+                border-color: themed('buttonTextHoverColor');
+                background-color: themed('buttonHoverColor');
+            }
+        }
+    }
+
+    .switch {
+        display: inline-block;
+        height: 34px;
+        position: relative;
+        width: 60px;
+         
+        input {
+            display:none;
+        }
+          
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+          
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+        }
+          
+        input:checked + .slider {
+
+            @include themify($themes) {
+                background-color: themed('sliderActiveColor');
+            }
+        }
+          
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+          
+        .slider.round {
+            border-radius: 34px;
+        }
+          
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    }
+      
+      
+      
+}

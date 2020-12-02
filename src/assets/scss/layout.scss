@@ -1,0 +1,42 @@
+@import './themes/themes.scss';
+@import './theming.scss';
+
+@import './base.scss';
+@import './forms/switch.scss';
+
+body {
+    font-family: 'Roboto', sans-serif;;
+}
+
+#app-root {
+    display: flex;
+    height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    transition: .4s;
+
+    @include themify($themes) {
+        color: themed('text-color');  
+        background-color: themed('background-color');
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        min-height: 50px;
+        padding: 10px 0;
+        transition: .4s;
+        
+        @include themify($themes) {
+            background-color: themed('text-color');
+        }
+    }
+}

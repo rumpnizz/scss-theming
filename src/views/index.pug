@@ -1,0 +1,17 @@
+extends layout
+
+block layout-content
+    h1.page-title Gooby
+        span.slogan This is stupid.
+    //- h1.page-title This is stupid.
+    h1.title
+        span.theme-title-0 Light theme
+        span.theme-title-1 Dark theme
+        //- span#theme-name Light
+        //- |  theme
+    //- button.button A button
+    label(for='checkbox').switch
+        input(type='checkbox')#checkbox
+        .slider.round
+
+
