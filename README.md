@@ -5,6 +5,6 @@
 * Npm Package Manager (included in NodeJS installer)
 
 ## How to run
-* from terminal, run `npm run`
+* from terminal, run `npm run`.
 
-## Or open the `demo/index.html` in your browser.
+## Or open the compiled pug and scss in `demo/index.html` in your browser.
